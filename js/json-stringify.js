@@ -8,35 +8,38 @@
 
 	// Create a string using an object's key-value pair
 	function kvToString(key, obj) {
-		var value = obj[key];
+		var	objectValue = obj[key],
+			tempArray,
+			tempKey,
+			tempValue;
 
 		// Handle objects with prototype.toJSON() defined (e.g. date objects)
-		if(value && typeof value === 'object' && typeof value.toJSON === 'function') {
-			value = value.toJSON(key);
+		if(objectValue && typeof objectValue === 'object' && typeof objectValue.toJSON === 'function') {
+			objectValue = objectValue.toJSON(key);
 		}
 
 		// Create a string based on the object's type
-		switch(typeof value) {
+		switch(typeof objectValue) {
 			case 'boolean':
-				return value.toString();
+				return objectValue.toString();
 
 			case 'number':
 				// Ignore infinite numbers
-				return isFinite(value) ? value.toString() : null;
+				return isFinite(objectValue) ? objectValue.toString() : null;
 
 			case 'object':
 				// Handle the case where value is null (typeof null === 'object')
-				if(value === null) {
+				if(objectValue === null) {
 					return 'null';
 				}
 
 				// Handle arrays
-				let temp = [];
-				if(value instanceof Array) {
-					value.forEach(function(arrayValue, arrayIndex) {
-						temp.push(kvToString(arrayIndex, value));
+				tempArray = [];
+				if (objectValue instanceof Array) {
+					objectValue.forEach(function(arrayValue, arrayIndex) {
+						tempArray.push(kvToString(arrayIndex, objectValue));
 					});
-					return '[' + temp.join(',') + ']';
+					return '[' + tempArray.join(',') + ']';
 				}
 
 				// Loop through all keys on the object
@@ -44,22 +47,24 @@
 				// NOTE: for...in ignores all non-enumerable properties as required by the spec.
 				//       Object.prototype.propertyIsEnumerable() could be manually called, but that
 				//       would be redundant.
-				for (var k in value) {
-                    if (Object.prototype.hasOwnProperty.call(value, k)) {
-                        var v = kvToString(k, value);
-                        if (v) {
-                            temp.push(addQuotes(k) + ':' + v);
-                        }
-                    }
-                }
-                return temp.length === 0 ? '{}' : '{' + temp.join(',') + '}';
+				for (tempKey in objectValue) {
+					if (Object.prototype.hasOwnProperty.call(objectValue, tempKey)) {
+						tempValue = kvToString(tempKey, objectValue);
+						if (tempValue) {
+							tempArray.push(addQuotes(tempKey) + ':' + tempValue);
+						}
+					}
+				}
+				return tempArray.length === 0 ? '{}' : '{' + tempArray.join(',') + '}';
 
 			case 'string':
-				return addQuotes(value);
+				return addQuotes(objectValue);
 		}
 	}
 
-	module.exports.jsonStringify = function jsonStringify(value, replacer, space) {
-		return kvToString('', {'': value});
+	module.exports = {
+		jsonStringify: function jsonStringify(value) {
+			return kvToString('', {'': value});
+		}
 	};
 }());
