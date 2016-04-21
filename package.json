@@ -1,0 +1,23 @@
+{
+  "name": "json-stringify",
+  "version": "1.0.0",
+  "description": "A from-scratch re-implementation of JSON.stringify()",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --bail --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mangs/json-stringify.git"
+  },
+  "author": "Eric L. Goldstein",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/mangs/json-stringify/issues"
+  },
+  "homepage": "https://github.com/mangs/json-stringify#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
+}
