@@ -37,7 +37,7 @@ describe('Eric Goldstein\'s JSON.stringify() clone', function() {
 		expect(jsonStringify([1, 'false', false])).to.deep.equal('[1,"false",false]');
 	});
 
-	it('handles non-enumerable properties', function() {
+	it('handles non-enumerable properties and objects with no prototype chain', function() {
 		expect(jsonStringify(Object.create(null, { x: { value: 'x', enumerable: false }, y: { value: 'y', enumerable: true } }) ))
 			.to.deep.equal('{"y":"y"}');
 	});

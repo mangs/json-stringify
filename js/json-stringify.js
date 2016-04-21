@@ -48,6 +48,8 @@
 				//       Object.prototype.propertyIsEnumerable() could be manually called, but that
 				//       would be redundant.
 				for (tempKey in objectValue) {
+					// Use Object.prototype.hasOwnProperty() instead of objectValue.hasOwnProperty
+					// so this code supports objects without a prototype chain (e.g. Object.create(null))
 					if (Object.prototype.hasOwnProperty.call(objectValue, tempKey)) {
 						tempValue = kvToString(tempKey, objectValue);
 						if (tempValue) {
