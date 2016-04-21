@@ -1,5 +1,5 @@
 # json-stringify
-A from-scratch re-implementation of JSON.stringify()
+A from-scratch re-implementation of `JSON.stringify()`
 
 ## Usage
 1. Clone this git repository
