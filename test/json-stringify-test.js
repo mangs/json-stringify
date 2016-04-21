@@ -1,7 +1,7 @@
 'use strict';
 
-let expect = require('chai').expect;
-let jsonStringify = require('../js/json-stringify').jsonStringify;
+var expect = require('chai').expect;
+var jsonStringify = require('../js/json-stringify').jsonStringify;
 
 // Using all relevant examples from the Mozilla Developer Network page for JSON.stringify()
 // (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
@@ -35,7 +35,7 @@ describe('Eric Goldstein\'s JSON.stringify() clone', function() {
 
 	it('handles arrays', function() {
 		expect(jsonStringify([1, 'false', false])).to.deep.equal('[1,"false",false]');
-	})
+	});
 
 	it('handles non-enumerable properties', function() {
 		expect(jsonStringify(Object.create(null, { x: { value: 'x', enumerable: false }, y: { value: 'y', enumerable: true } }) ))
@@ -43,13 +43,13 @@ describe('Eric Goldstein\'s JSON.stringify() clone', function() {
 	});
 
 	it('handles a complex combination of objects, arrays, and primitive values', function() {
-		const testObject = {
+		var testObject = {
 			people: ['jim', 'bob', 'fred'],
 			count: 3,
 			rolesAvailable: true,
 			contacts: [{name: 'Fake Guy', email: 'fake@guy.com'}, {name: 'Someone Else', email: 'someone@else.com'}]
 		};
-		const expected = '{"people":["jim","bob","fred"],"count":3,"rolesAvailable":true,"contacts":[{"name":"Fake Guy","email":"fake@guy.com"},{"name":"Someone Else","email":"someone@else.com"}]}';
+		var expected = '{"people":["jim","bob","fred"],"count":3,"rolesAvailable":true,"contacts":[{"name":"Fake Guy","email":"fake@guy.com"},{"name":"Someone Else","email":"someone@else.com"}]}';
 		expect(jsonStringify(testObject)).to.deep.equal(expected);
-	})
+	});
 });
